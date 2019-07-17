@@ -1,0 +1,16 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Frank Sinatra",
+      "email": "frank@sinatra.com",
+      "password": "123456"
+    },
+    {
+      "id": 2,
+      "name": "Johnny Cash",
+      "email": "johnny@cash.com",
+      "password": "123456"
+    }
+  ]
+}
