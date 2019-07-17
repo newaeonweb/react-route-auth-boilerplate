@@ -13,8 +13,8 @@ class CharacterList extends Component {
   }
 
   componentDidMount() {
-    // this.getCharacters()
-    this.getListCharacters();
+    this.getCharacters();
+    // this.getListCharacters();
   }
 
   async getCharacters() {
@@ -54,15 +54,27 @@ class CharacterList extends Component {
   render() {
     const { characterList, info, error, isLoading } = this.state;
     if (error) {
-      return <p>{error.message}</p>;
+      return (
+        <div className="container">
+          <div className="row">
+            <div className="col">
+              <p className="is-center">{error.message}</p>
+            </div>
+          </div>
+        </div>
+      );
     }
-    // if (isLoading) {
-    //   return <p>Loading ...</p>;
-    // }
+
     return (
       <div>
         {isLoading ? (
-          <p>Loading ...</p>
+          <div className="container">
+            <div className="row">
+              <div className="col">
+                <p className="is-center">Loading...</p>
+              </div>
+            </div>
+          </div>
         ) : (
           <div className="container" style={{ marginTop: 10 }}>
             <div className="row">

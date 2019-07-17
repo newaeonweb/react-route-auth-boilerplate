@@ -32,10 +32,26 @@ class EpisodeList extends Component {
   render() {
     const { episodeList, info, error, isLoading } = this.state;
     if (error) {
-      return <p>{error.message}</p>;
+      return (
+        <div className="container">
+          <div className="row">
+            <div className="col">
+              <p className="is-center">{error.message}</p>
+            </div>
+          </div>
+        </div>
+      );
     }
     if (isLoading) {
-      return <p>Loading...</p>;
+      return (
+        <div className="container">
+          <div className="row">
+            <div className="col">
+              <p className="is-center">Loading...</p>
+            </div>
+          </div>
+        </div>
+      );
     }
     return (
       <div className="page">

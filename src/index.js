@@ -11,29 +11,44 @@ import NotFound from './pages/shared/NotFound';
 import * as serviceWorker from './serviceWorker';
 import EpisodeList from './pages/episode/episode-list';
 import EpisodeDetail from './pages/episode/episode-detail';
+import Signin from './pages/auth/signin';
+import Signup from './pages/auth/signup';
 
 const routing = (
   <Router>
     <div className="layout">
-      <div className="nav-menu">
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/band">Band</Link>
-          </li>
-          <li>
-            <Link to="/character">Character</Link>
-          </li>
-          <li>
-            <Link to="/episode">Episode</Link>
-          </li>
-          <li>
-            <Link to="/label">Label</Link>
-          </li>
-        </ul>
-      </div>
+      <nav className="nav">
+        <div className="nav-left">
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            {/* <li>
+              <Link to="/band">Band</Link>
+            </li> */}
+            <li>
+              <Link to="/character">Character</Link>
+            </li>
+            <li>
+              <Link to="/episode">Episode</Link>
+            </li>
+            {/* <li>
+              <Link to="/label">Label</Link>
+            </li> */}
+          </ul>
+        </div>
+        <div className="nav-right">
+          <ul>
+            <li>
+              <Link to="/signin">Signin</Link>
+            </li>
+            <li>
+              <Link to="/signup">Signup</Link>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
       <div className="page-container">
         <Switch>
           <Route exact path="/" component={HomePage} />
@@ -43,6 +58,8 @@ const routing = (
           <Route exact path="/character/:id" component={CharacterDetail} />
           <Route exact path="/episode" component={EpisodeList} />
           <Route exact path="/episode/:id" component={EpisodeDetail} />
+          <Route exact path="/signin" component={Signin} />
+          <Route exact path="/signup" component={Signup} />
           <Route component={NotFound} />
         </Switch>
       </div>
