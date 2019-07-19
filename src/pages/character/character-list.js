@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { getCharacters } from './_store/actions';
 
 class CharacterList extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      info: {},
-      characterList: [],
-      isLoading: false,
-      error: null,
-    };
+    // this.state = {
+    //   info: {},
+    //   characterList: [],
+    //   isLoading: false,
+    //   error: null,
+    // };
   }
 
-  componentDidMount() {
-    this.getCharacters();
+  componentWillMount() {
+    // this.getCharacters();
     // this.getListCharacters();
+    this.props.getCharacters();
   }
 
   async getCharacters() {
@@ -52,13 +56,19 @@ class CharacterList extends Component {
   }
 
   render() {
-    const { characterList, info, error, isLoading } = this.state;
-    if (error) {
+    const {
+      characterList,
+      info,
+      errorMessage,
+      isLoading,
+    } = this.props.character;
+    console.log(this.props.character);
+    if (errorMessage) {
       return (
         <div className="container">
           <div className="row">
             <div className="col">
-              <p className="is-center">{error.message}</p>
+              <p className="is-center">{errorMessage}</p>
             </div>
           </div>
         </div>
@@ -116,4 +126,16 @@ class CharacterList extends Component {
   }
 }
 
-export default CharacterList;
+CharacterList.propTypes = {
+  getCharacters: PropTypes.func.isRequired,
+  character: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = state => ({
+  character: state.character,
+});
+
+export default connect(
+  mapStateToProps,
+  { getCharacters }
+)(CharacterList);

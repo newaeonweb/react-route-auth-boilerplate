@@ -91,6 +91,6 @@ server.post('/api/signin', (req, res) => {
 
 server.use(router);
 
-server.listen(3000, () => {
+server.listen(3001, () => {
   console.log('Run Auth API Server');
 });
