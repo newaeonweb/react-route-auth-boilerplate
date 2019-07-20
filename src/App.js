@@ -14,7 +14,6 @@ import Signup from './pages/auth/signup';
 
 import { connect } from 'react-redux';
 import { Logout } from './pages/auth/auth-store/auth-actions';
-import PropTypes from 'prop-types';
 
 import { createBrowserHistory } from 'history';
 export const history = createBrowserHistory();
@@ -101,11 +100,6 @@ class App extends Component {
 }
 
 // export default App;
-
-// App.propTypes = {
-//   user: PropTypes.object,
-//   Logout: PropTypes.func,
-// };
 
 const mapStateToProps = state => ({
   user: state.user,
