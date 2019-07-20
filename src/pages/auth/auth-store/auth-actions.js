@@ -1,4 +1,4 @@
-import { AUTH_SUCCESS, AUTH_FAIL } from './auth-types';
+import { AUTH_SUCCESS, AUTH_FAIL, AUTH_LOGOUT } from './auth-types';
 
 export const PostLogin = user => dispatch => {
   fetch('http://localhost:3001/api/signin', {
@@ -26,5 +26,11 @@ export const PostLogin = user => dispatch => {
         });
       });
     }
+  });
+};
+
+export const Logout = () => dispatch => {
+  dispatch({
+    type: AUTH_LOGOUT,
   });
 };

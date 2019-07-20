@@ -13,10 +13,28 @@ import EpisodeList from './pages/episode/episode-list';
 import EpisodeDetail from './pages/episode/episode-detail';
 import Signin from './pages/auth/signin';
 import Signup from './pages/auth/signup';
+
+import { connect } from 'react-redux';
+import { Logout } from './pages/auth/auth-store/auth-actions';
+import PropTypes from 'prop-types';
+
+import { createBrowserHistory } from 'history';
+export const history = createBrowserHistory();
+
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleLogout = this.handleLogout.bind(this);
+  }
+  handleLogout(event) {
+    event.preventDefault();
+    this.props.Logout();
+    history.push('/signin');
+  }
   render() {
-    const user = this.props;
-    console.log('props: ', this.props);
+    const user = this.props.user.user;
+    console.log(this.props);
     return (
       <div className="layout">
         <nav className="nav">
@@ -40,14 +58,27 @@ class App extends Component {
             </ul>
           </div>
           <div className="nav-right">
-            <ul>
-              <li>
-                <Link to="/signin">Signin</Link>
-              </li>
-              <li>
-                <Link to="/signup">Signup</Link>
-              </li>
-            </ul>
+            {!user.email ? (
+              <ul>
+                <li>
+                  <Link to="/signin">Signin</Link>
+                </li>
+                <li>
+                  <Link to="/signup">Signup</Link>
+                </li>
+              </ul>
+            ) : (
+              <ul>
+                <li>
+                  <Link to="/">{user.email}</Link>
+                </li>
+                <li>
+                  <Link to="/" onClick={this.handleLogout}>
+                    Logout
+                  </Link>
+                </li>
+              </ul>
+            )}
           </div>
         </nav>
 
@@ -70,4 +101,18 @@ class App extends Component {
   }
 }
 
-export default App;
+// export default App;
+
+App.propTypes = {
+  user: PropTypes.object,
+  Logout: PropTypes.func,
+};
+
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+export default connect(
+  mapStateToProps,
+  { Logout }
+)(App);

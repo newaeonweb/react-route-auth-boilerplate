@@ -1,7 +1,7 @@
-import { AUTH_SUCCESS, AUTH_FAIL } from './auth-types';
+import { AUTH_SUCCESS, AUTH_FAIL, AUTH_LOGOUT } from './auth-types';
 
 const initialState = {
-  user: {},
+  user: { email: '', password: '' },
   errorMessage: null,
 };
 
@@ -22,6 +22,8 @@ const authReducer = (state = initialState, action) => {
         ...state,
         errorMessage: action.errorMessage,
       };
+    case AUTH_LOGOUT:
+      return initialState;
     default:
       return state;
   }
