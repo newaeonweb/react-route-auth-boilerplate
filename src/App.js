@@ -3,7 +3,6 @@ import { Route, Link, Switch, Router } from 'react-router-dom';
 import './index.css';
 
 import HomePage from './pages/home/home';
-import Band from './pages/band/Band';
 import CharacterList from './pages/character/character-list';
 import CharacterDetail from './pages/character/character-detail';
 import NotFound from './pages/shared/NotFound';
@@ -87,7 +86,6 @@ class App extends Component {
         <div className="page-container">
           <Switch>
             <Route exact path="/" component={HomePage} />
-            <Route path="/band" component={Band} />
             <Route exact path="/character" component={CharacterList} />
             <Route exact path="/character/:id" component={CharacterDetail} />
             <Route exact path="/episode" component={EpisodeList} />
