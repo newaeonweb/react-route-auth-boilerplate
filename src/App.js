@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { Route, Link, Switch } from 'react-router-dom';
+import { Route, Link, Switch, Router } from 'react-router-dom';
 import './index.css';
 
 import HomePage from './pages/home/home';
 import Band from './pages/band/Band';
 import CharacterList from './pages/character/character-list';
 import CharacterDetail from './pages/character/character-detail';
-import Label from './pages/label/Label';
 import NotFound from './pages/shared/NotFound';
 
 import EpisodeList from './pages/episode/episode-list';
@@ -35,27 +34,30 @@ class App extends Component {
   render() {
     const user = this.props.user.user;
     console.log(this.props);
+
     return (
       <div className="layout">
         <nav className="nav">
           <div className="nav-left">
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              {/* <li>
-              <Link to="/band">Band</Link>
-            </li> */}
-              <li>
-                <Link to="/character">Character</Link>
-              </li>
-              <li>
-                <Link to="/episode">Episode</Link>
-              </li>
-              {/* <li>
-              <Link to="/label">Label</Link>
-            </li> */}
-            </ul>
+            {user.email ? (
+              <ul>
+                <li>
+                  <Link to="/">Home</Link>
+                </li>
+                <li>
+                  <Link to="/character">Character</Link>
+                </li>
+                <li>
+                  <Link to="/episode">Episode</Link>
+                </li>
+              </ul>
+            ) : (
+              <ul>
+                <li>
+                  <Link to="/">Home</Link>
+                </li>
+              </ul>
+            )}
           </div>
           <div className="nav-right">
             {!user.email ? (
@@ -86,7 +88,6 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={HomePage} />
             <Route path="/band" component={Band} />
-            <Route exact path="/label" component={Label} />
             <Route exact path="/character" component={CharacterList} />
             <Route exact path="/character/:id" component={CharacterDetail} />
             <Route exact path="/episode" component={EpisodeList} />
@@ -103,16 +104,20 @@ class App extends Component {
 
 // export default App;
 
-App.propTypes = {
-  user: PropTypes.object,
-  Logout: PropTypes.func,
-};
+// App.propTypes = {
+//   user: PropTypes.object,
+//   Logout: PropTypes.func,
+// };
 
 const mapStateToProps = state => ({
   user: state.user,
 });
 
+const mapActionsToProps = {
+  Logout: Logout,
+};
+
 export default connect(
   mapStateToProps,
-  { Logout }
+  mapActionsToProps
 )(App);

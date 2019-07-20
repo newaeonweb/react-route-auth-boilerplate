@@ -7,52 +7,10 @@ import { getCharacters } from './_store/actions';
 class CharacterList extends Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   info: {},
-    //   characterList: [],
-    //   isLoading: false,
-    //   error: null,
-    // };
   }
 
   componentWillMount() {
-    // this.getCharacters();
-    // this.getListCharacters();
     this.props.getCharacters();
-  }
-
-  async getCharacters() {
-    this.setState({ isLoading: true });
-    const apiUrl = 'https://rickandmortyapi.com/api/character/';
-    const response = await fetch(apiUrl);
-    const res = await response.json();
-    console.log(res);
-    this.setState({
-      info: res.info,
-      characterList: res.results,
-      isLoading: false,
-    });
-  }
-
-  getListCharacters() {
-    const apiUrl = 'https://rickandmortyapi.com/api/character/';
-    this.setState({ isLoading: true });
-    return fetch(apiUrl)
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Something went wrong ...');
-        }
-      })
-      .then(data =>
-        this.setState({
-          info: data.info,
-          characterList: data.results,
-          isLoading: false,
-        })
-      )
-      .catch(error => this.setState({ error, isLoading: false }));
   }
 
   render() {
@@ -62,7 +20,7 @@ class CharacterList extends Component {
       errorMessage,
       isLoading,
     } = this.props.character;
-    console.log(this.props.character);
+
     if (errorMessage) {
       return (
         <div className="container">
@@ -129,13 +87,20 @@ class CharacterList extends Component {
 CharacterList.propTypes = {
   getCharacters: PropTypes.func.isRequired,
   character: PropTypes.object.isRequired,
+  info: PropTypes.object,
+  errorMessage: PropTypes.string,
+  isLoading: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
   character: state.character,
 });
 
+const mapActionToProps = {
+  getCharacters: getCharacters,
+};
+
 export default connect(
   mapStateToProps,
-  { getCharacters }
+  mapActionToProps
 )(CharacterList);

@@ -114,13 +114,20 @@ class Signin extends Component {
 Signin.propTypes = {
   PostLogin: PropTypes.func.isRequired,
   user: PropTypes.object,
+  email: PropTypes.string,
+  password: PropTypes.string,
+  errorMessage: PropTypes.string,
 };
 
 const mapStateToProps = state => ({
   user: state.user,
 });
 
+const mapActionsToProps = {
+  PostLogin: PostLogin,
+};
+
 export default connect(
   mapStateToProps,
-  { PostLogin }
+  mapActionsToProps
 )(Signin);
