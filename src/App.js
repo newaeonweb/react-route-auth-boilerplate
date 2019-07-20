@@ -15,6 +15,8 @@ import Signin from './pages/auth/signin';
 import Signup from './pages/auth/signup';
 class App extends Component {
   render() {
+    const user = this.props;
+    console.log('props: ', this.props);
     return (
       <div className="layout">
         <nav className="nav">

@@ -1,8 +1,6 @@
 import { AUTH_SUCCESS, AUTH_FAIL } from './auth-types';
 
 const initialState = {
-  email: '',
-  password: '',
   user: {},
   errorMessage: null,
 };
@@ -17,6 +15,7 @@ const authReducer = (state = initialState, action) => {
           name: action.payload.name,
           email: action.payload.email,
         },
+        errorMessage: null,
       };
     case AUTH_FAIL:
       return {

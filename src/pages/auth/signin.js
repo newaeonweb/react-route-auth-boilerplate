@@ -21,8 +21,14 @@ class Signin extends Component {
     this.handleForm = this.handleForm.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.user.errorMessage) {
+      this.props.history.push('/character');
+    }
+    return;
+  }
+
   handleChange(event) {
-    console.log(event.target.value);
     this.setState({ [event.target.name]: event.target.value });
   }
 
@@ -30,13 +36,6 @@ class Signin extends Component {
     event.preventDefault();
     const isValid = this.validateForm();
     if (isValid) {
-      const user = {
-        email: this.state.email,
-        password: this.state.password,
-      };
-      console.log(user);
-      // this.fetchLogin(user.email, user.password);
-      // this.setState(initialState);
       this.props.PostLogin(this.state);
     }
   }
@@ -56,34 +55,9 @@ class Signin extends Component {
     return true;
   }
 
-  fetchLogin(email, password) {
-    const { history } = this.props;
-    return fetch('http://localhost:3001/api/signin', {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    }).then(response => {
-      if (response.ok) {
-        return response.json().then(json => {
-          console.log(json);
-          // this.setState({ user: { name: json.name, email: json.email } });
-          console.log('state:', this.state);
-          history.push('/character');
-        });
-      } else {
-        return response.json().then(json => {
-          console.log(json);
-          // this.setState({ errorMessage: json.message });
-        });
-      }
-    });
-  }
-
   render() {
-    const { email, password, errorMessage } = this.state;
+    const { email, password } = this.state;
+    const { errorMessage } = this.props.user;
 
     return (
       <div className="container">

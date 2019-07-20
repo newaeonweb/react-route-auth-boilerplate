@@ -1,10 +1,7 @@
 import { AUTH_SUCCESS, AUTH_FAIL } from './auth-types';
-import { createBrowserHistory } from 'history';
-
-const history = createBrowserHistory();
 
 export const PostLogin = user => dispatch => {
-  return fetch('http://localhost:3001/api/signin', {
+  fetch('http://localhost:3001/api/signin', {
     method: 'post',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -19,7 +16,6 @@ export const PostLogin = user => dispatch => {
           type: AUTH_SUCCESS,
           payload: json,
         });
-        history.push('/character');
       });
     } else {
       return response.json().then(json => {
