@@ -13,6 +13,7 @@ import Signin from './pages/auth/signin';
 import Signup from './pages/auth/signup';
 
 import Navigation from './pages/layout/Navigation';
+import PrivateRoute from './pages/layout/PrivateRoute';
 
 class App extends Component {
   render() {
@@ -22,10 +23,14 @@ class App extends Component {
         <div className="page-container">
           <Switch>
             <Route exact path="/" component={HomePage} />
-            <Route exact path="/character" component={CharacterList} />
-            <Route exact path="/character/:id" component={CharacterDetail} />
-            <Route exact path="/episode" component={EpisodeList} />
-            <Route exact path="/episode/:id" component={EpisodeDetail} />
+            <PrivateRoute exact path="/character" component={CharacterList} />
+            <PrivateRoute
+              exact
+              path="/character/:id"
+              component={CharacterDetail}
+            />
+            <PrivateRoute exact path="/episode" component={EpisodeList} />
+            <PrivateRoute exact path="/episode/:id" component={EpisodeDetail} />
             <Route exact path="/signin" component={Signin} />
             <Route exact path="/signup" component={Signup} />
             <Route component={NotFound} />
