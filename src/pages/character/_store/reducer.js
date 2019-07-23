@@ -15,7 +15,6 @@ const characterReducer = (state = initialState, action) => {
         isLoading: true,
       };
     case CHARACTER_SUCCESS:
-      console.log('reducer', action.payload);
       return {
         ...state,
         info: action.payload.info,

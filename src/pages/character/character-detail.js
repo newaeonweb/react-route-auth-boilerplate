@@ -47,12 +47,19 @@ class CharacterDetail extends Component {
 
   render() {
     const { character, error, isLoading } = this.state;
-    console.log(character);
     if (error) {
       return <p>{error.message}</p>;
     }
     if (isLoading) {
-      return <p>Loading ...</p>;
+      return (
+        <div className="container">
+          <div className="row">
+            <div className="col">
+              <p className="is-center">Loading...</p>
+            </div>
+          </div>
+        </div>
+      );
     }
     return (
       <div className="container">

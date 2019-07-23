@@ -20,11 +20,9 @@ export default class EpisodeDetail extends Component {
     this.setState({ isLoading: true });
 
     const id = this.props.match.params.id;
-    console.log(id);
     const apiUrl = 'https://rickandmortyapi.com/api/episode/' + id;
     const response = await fetch(apiUrl);
     const res = await response.json();
-    console.log(res);
     this.createCharacterList(res.characters);
     this.setState({
       episode: res,
@@ -45,7 +43,6 @@ export default class EpisodeDetail extends Component {
       'https://rickandmortyapi.com/api/character/' + characterIdArray
     );
     const res = await response.json();
-    console.log(res);
     this.setState({
       characters: res,
       isLoading: false,
@@ -53,8 +50,6 @@ export default class EpisodeDetail extends Component {
   }
 
   CharacterList(props) {
-    console.log(props);
-
     if (props.characters) {
       const listItems = props.characters.map((item, i) => (
         <li className="col-3" key={i}>
@@ -82,13 +77,19 @@ export default class EpisodeDetail extends Component {
 
   render() {
     const { episode, characters, error, isLoading } = this.state;
-    console.log(episode);
-    console.log(characters);
     if (error) {
       return <p>{error.message}</p>;
     }
     if (isLoading) {
-      return <p>Loading ...</p>;
+      return (
+        <div className="container">
+          <div className="row">
+            <div className="col">
+              <p className="is-center">Loading...</p>
+            </div>
+          </div>
+        </div>
+      );
     }
     if (!episode.characters) {
       return null;

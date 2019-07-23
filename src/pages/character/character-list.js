@@ -5,10 +5,6 @@ import PropTypes from 'prop-types';
 import { getCharacters } from './_store/actions';
 
 class CharacterList extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentWillMount() {
     this.props.getCharacters();
   }

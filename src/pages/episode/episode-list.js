@@ -21,7 +21,6 @@ class EpisodeList extends Component {
     const apiUrl = 'https://rickandmortyapi.com/api/episode/';
     const response = await fetch(apiUrl);
     const res = await response.json();
-    console.log(res);
     this.setState({
       info: res.info,
       episodeList: res.results,
