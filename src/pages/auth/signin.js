@@ -6,8 +6,8 @@ import { PostLogin } from './auth-store/auth-actions';
 import './auth.css';
 
 const initialState = {
-  email: '',
-  password: '',
+  email: 'johnny@cash.com',
+  password: '123456',
   user: {},
   errorMessage: null,
 };
