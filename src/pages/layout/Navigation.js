@@ -1,22 +1,18 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Logout } from '../auth/auth-store/auth-actions';
-
-import { createBrowserHistory } from 'history';
-export const history = createBrowserHistory();
 
 class Navigation extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
     this.handleLogout = this.handleLogout.bind(this);
   }
 
   handleLogout(event) {
     event.preventDefault();
     this.props.Logout();
-    history.push('/signin');
+    this.props.history.push('/signin');
   }
 
   render() {
@@ -60,7 +56,7 @@ class Navigation extends Component {
                 <Link to="/">{user.email}</Link>
               </li>
               <li>
-                <Link to="/" onClick={this.handleLogout}>
+                <Link to="/signin" onClick={this.handleLogout}>
                   Logout
                 </Link>
               </li>
@@ -80,7 +76,9 @@ const mapActionsToProps = {
   Logout: Logout,
 };
 
-export default connect(
-  mapStateToProps,
-  mapActionsToProps
-)(Navigation);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapActionsToProps
+  )(Navigation)
+);
