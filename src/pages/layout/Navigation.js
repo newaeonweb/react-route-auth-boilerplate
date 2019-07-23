@@ -12,11 +12,13 @@ class Navigation extends Component {
     console.log(this.props);
     this.handleLogout = this.handleLogout.bind(this);
   }
+
   handleLogout(event) {
     event.preventDefault();
     this.props.Logout();
     history.push('/signin');
   }
+
   render() {
     const user = this.props.user.user;
     return (
