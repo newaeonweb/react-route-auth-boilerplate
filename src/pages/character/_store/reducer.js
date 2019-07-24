@@ -1,4 +1,4 @@
-import { CHARACTER_GET, CHARACTER_SUCCESS, CHARACTER_FAIL } from './types';
+import { CHARACTER_REQUEST, CHARACTER_SUCCESS, CHARACTER_FAIL } from './types';
 
 const initialState = {
   info: {},
@@ -10,7 +10,7 @@ const initialState = {
 
 const characterReducer = (state = initialState, action) => {
   switch (action.type) {
-    case CHARACTER_GET:
+    case CHARACTER_REQUEST:
       return {
         isLoading: true,
       };
