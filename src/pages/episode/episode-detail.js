@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { httpCartoonService } from '../_services/http-cartoon.service';
 
 export default class EpisodeDetail extends Component {
   constructor(props) {
@@ -18,16 +19,20 @@ export default class EpisodeDetail extends Component {
 
   async getEpisode() {
     this.setState({ isLoading: true });
-
     const id = this.props.match.params.id;
-    const apiUrl = 'https://rickandmortyapi.com/api/episode/' + id;
-    const response = await fetch(apiUrl);
-    const res = await response.json();
-    this.createCharacterList(res.characters);
-    this.setState({
-      episode: res,
-      isLoading: false,
-    });
+    await httpCartoonService.getOne(`episode/${id}`).then(
+      res => {
+        this.createCharacterList(res.characters);
+        this.setState({
+          episode: res,
+          isLoading: false,
+        });
+      },
+      error => {
+        console.log('error', error);
+        this.setState({ isLoading: false, error: error });
+      }
+    );
   }
 
   async createCharacterList(urlArray) {
@@ -78,7 +83,7 @@ export default class EpisodeDetail extends Component {
   render() {
     const { episode, characters, error, isLoading } = this.state;
     if (error) {
-      return <p>{error.message}</p>;
+      return <p>{error.error}</p>;
     }
     if (isLoading) {
       return (
