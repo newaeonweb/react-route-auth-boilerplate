@@ -12,7 +12,7 @@ export const PostLogin = user => dispatch => {
     error => {
       dispatch({
         type: AUTH_FAIL,
-        errorMessage: error,
+        error: error.toString(),
       });
     }
   );
