@@ -6,7 +6,7 @@ import { getOneCharacter } from './_store/actions';
 import './character.css';
 
 class CharacterDetail extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.getCharacterDetail();
   }
 
