@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import { getOneCharacter } from './_store/actions';
+import * as CharacterAction from './_store/actions';
 import './character.css';
 
 class CharacterDetail extends Component {
@@ -12,7 +13,7 @@ class CharacterDetail extends Component {
 
   getCharacterDetail() {
     const id = this.props.match.params.id;
-    this.props.getOneCharacter(id);
+    this.props.action.getOneCharacter(id);
   }
 
   EpisodeList(props) {
@@ -89,7 +90,6 @@ class CharacterDetail extends Component {
 // export default CharacterDetail;
 
 CharacterDetail.propTypes = {
-  getOneCharacter: PropTypes.func.isRequired,
   character: PropTypes.object.isRequired,
   info: PropTypes.object,
   errorMessage: PropTypes.string,
@@ -100,9 +100,9 @@ const mapStateToProps = state => ({
   character: state.character,
 });
 
-const mapActionToProps = {
-  getOneCharacter: getOneCharacter,
-};
+const mapActionToProps = dispatch => ({
+  action: bindActionCreators(CharacterAction, dispatch),
+});
 
 export default connect(
   mapStateToProps,

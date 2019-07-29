@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import { getCharacters } from './_store/actions';
+import * as CharacterAction from './_store/actions';
 
 class CharacterList extends Component {
   componentDidMount() {
-    this.props.getCharacters();
+    this.props.action.getCharacters();
   }
 
   render() {
@@ -81,7 +82,6 @@ class CharacterList extends Component {
 }
 
 CharacterList.propTypes = {
-  getCharacters: PropTypes.func.isRequired,
   character: PropTypes.object.isRequired,
   info: PropTypes.object,
   errorMessage: PropTypes.string,
@@ -92,9 +92,9 @@ const mapStateToProps = state => ({
   character: state.character,
 });
 
-const mapActionToProps = {
-  getCharacters: getCharacters,
-};
+const mapActionToProps = dispatch => ({
+  action: bindActionCreators(CharacterAction, dispatch),
+});
 
 export default connect(
   mapStateToProps,
