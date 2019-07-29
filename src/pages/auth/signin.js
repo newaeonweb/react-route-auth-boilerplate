@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import { PostLogin } from './auth-store/auth-actions';
+import * as AuthAction from './auth-store/auth-actions';
 import './auth.css';
 
 const initialState = {
@@ -36,7 +37,7 @@ class Signin extends Component {
     event.preventDefault();
     const isValid = this.validateForm();
     if (isValid) {
-      this.props.PostLogin(this.state);
+      this.props.action.PostLogin(this.state);
     }
   }
 
@@ -112,7 +113,6 @@ class Signin extends Component {
 }
 
 Signin.propTypes = {
-  PostLogin: PropTypes.func.isRequired,
   user: PropTypes.object,
   email: PropTypes.string,
   password: PropTypes.string,
@@ -123,11 +123,11 @@ const mapStateToProps = state => ({
   user: state.user,
 });
 
-const mapActionsToProps = {
-  PostLogin: PostLogin,
-};
+const mapActionToProps = dispatch => ({
+  action: bindActionCreators(AuthAction, dispatch),
+});
 
 export default connect(
   mapStateToProps,
-  mapActionsToProps
+  mapActionToProps
 )(Signin);
