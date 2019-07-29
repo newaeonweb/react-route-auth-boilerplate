@@ -1,52 +1,44 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { getOneCharacter } from './_store/actions';
 import './character.css';
 
 class CharacterDetail extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      character: {},
-      isLoading: false,
-      error: null,
-    };
-  }
-
-  componentDidMount() {
+  componentWillMount() {
     this.getCharacterDetail();
   }
 
   getCharacterDetail() {
     const id = this.props.match.params.id;
-    const apiUrl = 'https://rickandmortyapi.com/api/character/' + id;
-    this.setState({ isLoading: true });
-    return fetch(apiUrl)
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Something went wrong ...');
-        }
-      })
-      .then(data => this.setState({ character: data, isLoading: false }))
-      .catch(error => this.setState({ error, isLoading: false }));
+    this.props.getOneCharacter(id);
   }
 
   EpisodeList(props) {
     const episodes = props.episodes;
     if (episodes) {
-      const listItems = episodes.map((episode, i) => (
-        <li key={i}>
-          <Link to={'/episode/' + (i + 1)}>Episode: {i + 1}</Link>{' '}
-        </li>
-      ));
-      return <ul>{listItems}</ul>;
+      const episodeList = episodes.map((episode, i) => {
+        const getNum = episode.split('/');
+        const num = getNum[getNum.length - 1];
+        const episodeNumber = parseInt(num, 10);
+        return (
+          <li key={i}>
+            <Link to={'/episode/' + episodeNumber}>
+              Episode: {episodeNumber}
+            </Link>{' '}
+          </li>
+        );
+      });
+
+      return <ul>{episodeList}</ul>;
     }
     return '';
   }
 
   render() {
-    const { character, error, isLoading } = this.state;
+    const { characterItem, error, isLoading } = this.props.character;
+
     if (error) {
       return <p>{error.message}</p>;
     }
@@ -66,25 +58,25 @@ class CharacterDetail extends Component {
         <div>
           <div className="card is-text-center">
             <header>
-              <h4 className="text-primary ">{character.name}</h4>
-              <img src={character.image} alt="" />
+              <h4 className="text-primary ">{characterItem.name}</h4>
+              <img src={characterItem.image} alt="" />
               <p>
-                Status: {character.status} | Species: {character.species} |
-                Gender: {character.gender}
+                Status: {characterItem.status} | Species:{' '}
+                {characterItem.species} | Gender: {characterItem.gender}
               </p>
               <br />
               <hr />
             </header>
             <div>
               <h5>Episodes:</h5>
-              <this.EpisodeList episodes={character.episode} />
+              <this.EpisodeList episodes={characterItem.episode} />
             </div>
             <hr />
             <footer className="is-center">
               <p className="text-grey">
                 {' '}
                 <strong>Origin</strong> :{' '}
-                {character.origin ? character.origin.name : ''}
+                {characterItem.origin ? characterItem.origin.name : ''}
               </p>
             </footer>
           </div>
@@ -94,4 +86,25 @@ class CharacterDetail extends Component {
   }
 }
 
-export default CharacterDetail;
+// export default CharacterDetail;
+
+CharacterDetail.propTypes = {
+  getOneCharacter: PropTypes.func.isRequired,
+  character: PropTypes.object.isRequired,
+  info: PropTypes.object,
+  errorMessage: PropTypes.string,
+  isLoading: PropTypes.bool,
+};
+
+const mapStateToProps = state => ({
+  character: state.character,
+});
+
+const mapActionToProps = {
+  getOneCharacter: getOneCharacter,
+};
+
+export default connect(
+  mapStateToProps,
+  mapActionToProps
+)(CharacterDetail);

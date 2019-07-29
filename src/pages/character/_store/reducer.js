@@ -19,6 +19,7 @@ const characterReducer = (state = initialState, action) => {
   switch (action.type) {
     case CHARACTER_ALL_REQUEST:
       return {
+        ...state,
         isLoading: true,
       };
     case CHARACTER_ALL_SUCCESS:
@@ -34,12 +35,13 @@ const characterReducer = (state = initialState, action) => {
       };
     case CHARACTER_ONE_REQUEST:
       return {
+        ...state,
         isLoading: true,
       };
     case CHARACTER_ONE_SUCCESS:
       return {
         ...state,
-        character: action.payload,
+        characterItem: action.payload,
         isLoading: false,
       };
     case CHARACTER_ONE_FAIL:
