@@ -1,31 +1,30 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import store from '../../app-store/app-store';
+import { connect } from 'react-redux';
 
-const isLogged = () => {
-  const state = store.getState();
-  if (state.user.user.email) {
-    return true;
-  } else {
-    return false;
-  }
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  const { user } = rest;
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        user.email ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: '/signin',
+              state: { from: props.location },
+            }}
+          />
+        )
+      }
+    />
+  );
 };
 
-store.subscribe(isLogged);
+const mapStateToProps = state => ({
+  user: state.user.user,
+});
 
-export const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
-      isLogged() ? (
-        <Component {...props} />
-      ) : (
-        <Redirect
-          to={{ pathname: '/signin', state: { from: props.location } }}
-        />
-      )
-    }
-  />
-);
-
-export default PrivateRoute;
+export default connect(mapStateToProps)(PrivateRoute);
