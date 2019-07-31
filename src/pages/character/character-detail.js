@@ -87,8 +87,6 @@ class CharacterDetail extends Component {
   }
 }
 
-// export default CharacterDetail;
-
 CharacterDetail.propTypes = {
   character: PropTypes.object.isRequired,
   info: PropTypes.object,
