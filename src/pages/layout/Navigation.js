@@ -16,7 +16,7 @@ class Navigation extends Component {
   }
 
   render() {
-    const user = this.props.user.user;
+    const user = this.props.profile.user;
     return (
       <nav className="nav">
         <div className="nav-left">
@@ -69,7 +69,7 @@ class Navigation extends Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.user,
+  profile: state.profile,
 });
 
 const mapActionsToProps = {

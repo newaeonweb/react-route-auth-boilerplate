@@ -1,7 +1,7 @@
 import { AUTH_SUCCESS, AUTH_FAIL, AUTH_LOGOUT } from './auth-types';
 
 const initialState = {
-  user: { email: '', password: '' },
+  user: { email: '', name: '' },
   errorMessage: null,
 };
 

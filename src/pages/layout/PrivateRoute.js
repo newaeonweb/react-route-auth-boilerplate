@@ -24,7 +24,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 };
 
 const mapStateToProps = state => ({
-  user: state.user.user,
+  user: state.profile.user,
 });
 
 export default connect(mapStateToProps)(PrivateRoute);

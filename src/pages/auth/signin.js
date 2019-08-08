@@ -120,7 +120,7 @@ Signin.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  user: state.user,
+  user: state.profile,
 });
 
 const mapActionToProps = dispatch => ({
