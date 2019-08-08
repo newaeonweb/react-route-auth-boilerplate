@@ -86,7 +86,7 @@ server.post('/api/signin', (req, res) => {
   // Get user from DB
   let user = userdb.users.find(user => user.email === email);
 
-  res.status(200).json({ email: email, password: password, name: user.name });
+  res.status(200).json({ email: email, name: user.name });
 });
 
 server.use(router);
